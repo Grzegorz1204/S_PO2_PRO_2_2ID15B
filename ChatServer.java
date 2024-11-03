@@ -3,86 +3,108 @@ import java.net.*;
 import java.util.*;
 
 public class ChatServer {
-    private static Set<ClientHandler> clientHandlers = new HashSet<>();
+    private ServerSocket serverSocket;
+    private List<ClientHandler> clients = new ArrayList<>();
 
-    public static void main(String[] args) {
-        try (ServerSocket serverSocket = new ServerSocket(50000)) {
-            System.out.println("Serwer wystartował, oczekiwanie na klientów...");
+    public void startServer(int port) {
+        try {
+            serverSocket = new ServerSocket(port);
+            System.out.println("Serwer uruchomiony na porcie " + port);
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Nowy klient połączony!");
+                InetAddress clientAddress = clientSocket.getInetAddress();
+                int clientPort = clientSocket.getPort();
+                System.out.println("Nowy klient połączony(" + clientAddress.getHostAddress() + ":" + clientPort + ")");
 
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
-                clientHandlers.add(clientHandler);
-
-                new Thread(clientHandler).start();
+                clients.add(clientHandler);
+                clientHandler.start();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Błąd podczas uruchamiania serwera: " + e.getMessage());
         }
     }
 
-    public static void broadcastMessage(String message, ClientHandler excludeClient) {
-        for (ClientHandler client : clientHandlers) {
-            if (client != excludeClient) {
+    private boolean verifyUserCredentials(String username, String password) {
+        try (BufferedReader br = new BufferedReader(new FileReader("users.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] userData = line.split(":");
+                if (userData.length == 2 && userData[0].equals(username) && userData[1].equals(password)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Błąd podczas odczytu danych użytkownika: " + e.getMessage());
+        }
+        return false;
+    }
+
+    private void broadcastMessage(String message, ClientHandler sender) {
+        for (ClientHandler client : clients) {
+            if (client != sender) {
                 client.sendMessage(message);
             }
         }
     }
 
-    public static void removeClient(ClientHandler clientHandler) {
-        clientHandlers.remove(clientHandler);
-        System.out.println(clientHandler.getClientName() + " opuścił czat.");
-    }
-}
+    private class ClientHandler extends Thread {
+        private Socket clientSocket;
+        private BufferedReader input;
+        private PrintWriter output;
+        private String username;
 
-class ClientHandler implements Runnable {
-    private Socket socket;
-    private PrintWriter out;
-    private BufferedReader in;
-    private String clientName;
+        public ClientHandler(Socket socket) {
+            this.clientSocket = socket;
+        }
 
-    public ClientHandler(Socket socket) {
-        this.socket = socket;
-    }
-
-    @Override
-    public void run() {
-        try {
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            clientName = in.readLine();
-            System.out.println(clientName + " dołączył do czatu.");
-
-            ChatServer.broadcastMessage(clientName + " dołączył do czatu.", this);
-
-            String clientMessage;
-            while ((clientMessage = in.readLine()) != null) {
-                System.out.println(clientName + ": " + clientMessage);
-                ChatServer.broadcastMessage(clientName + ": " + clientMessage, this);
-            }
-        } catch (SocketException e) {
-            System.out.println("Połączenie z " + clientName + " zostało przerwane.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
+        @Override
+        public void run() {
             try {
-                socket.close();
+                input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                output = new PrintWriter(clientSocket.getOutputStream(), true);
+
+                // Odbieranie loginu i hasła
+                String credentials = input.readLine();
+                String[] userData = credentials.split(":");
+
+                if (userData.length == 2 && verifyUserCredentials(userData[0], userData[1])) {
+                    username = userData[0];
+                    output.println("Logowanie udane");
+                    System.out.println("Użytkownik " + username + " zalogował się pomyślnie.");
+
+                    String message;
+                    while ((message = input.readLine()) != null) {
+                        System.out.println(username + ": " + message);
+                        broadcastMessage(username + ": " + message, this);
+                    }
+                } else {
+                    output.println("Nieprawidłowy login lub hasło");
+                    System.out.println("Nieudana próba logowania.");
+                    clientSocket.close();
+                }
+
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Błąd w obsłudze klienta: " + e.getMessage());
+            } finally {
+                try {
+                    clientSocket.close();
+                    clients.remove(this);
+                    System.out.println("Klient " + username + " rozłączony.");
+                } catch (IOException e) {
+                    System.out.println("Błąd podczas zamykania gniazda klienta: " + e.getMessage());
+                }
             }
-            ChatServer.removeClient(this);
-            ChatServer.broadcastMessage(clientName + " opuścił czat.", this);
+        }
+
+        private void sendMessage(String message) {
+            output.println(message);
         }
     }
 
-    public String getClientName() {
-        return clientName;
-    }
-
-    public void sendMessage(String message) {
-        out.println(message);
+    public static void main(String[] args) {
+        ChatServer server = new ChatServer();
+        server.startServer(50000); 
     }
 }

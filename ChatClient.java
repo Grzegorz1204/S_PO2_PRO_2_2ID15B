@@ -4,47 +4,62 @@ import java.util.Scanner;
 
 public class ChatClient {
     private Socket socket;
-    private BufferedReader in;
-    private PrintWriter out;
-    private String clientName;
+    private BufferedReader input;
+    private PrintWriter output;
 
-    public ChatClient(String serverAddress, int port) {
+    public void startClient(String address, int port) {
         try {
-            socket = new Socket(serverAddress, port);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
+            socket = new Socket(address, port);
+            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            output = new PrintWriter(socket.getOutputStream(), true);
 
-            BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("Podaj swoją nazwę użytkownika: ");
-            clientName = userInput.readLine();
-            out.println(clientName);
-            
-            new Thread(new ServerListener()).start();
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Podaj login: ");
+            String username = scanner.nextLine();
+            System.out.print("Podaj hasło: ");
+            String password = scanner.nextLine();
 
-            String message;
-            while ((message = userInput.readLine()) != null) {
-                out.println(message);
+            output.println(username + ":" + password); 
+
+            String response = input.readLine(); 
+            System.out.println(response);
+
+            if ("Logowanie udane".equals(response)) {
+                System.out.println("Połączono z czatem!");
+
+                new Thread(new MessageReceiver()).start();
+
+                String message;
+                while (true) {
+                    //System.out.print("Ty: ");
+                    message = scanner.nextLine();
+                    output.println(message);
+                }
+            } else {
+                System.out.println("Logowanie nieudane. Spróbuj ponownie.");
             }
+
         } catch (IOException e) {
-            System.err.println("Błąd połączenia z serverem: " + e.getMessage());
+            System.out.println("Błąd podczas łączenia z serwerem: " + e.getMessage());
         } finally {
             try {
                 if (socket != null) socket.close();
             } catch (IOException e) {
-                System.err.println("Błąd zamykania połączenia: " + e.getMessage());
+                System.out.println("Błąd podczas zamykania gniazda: " + e.getMessage());
             }
         }
     }
 
-    private class ServerListener implements Runnable {
+    private class MessageReceiver implements Runnable {
+        @Override
         public void run() {
             try {
-                String serverMessage;
-                while ((serverMessage = in.readLine()) != null) {
-                    System.out.println(serverMessage);
+                String message;
+                while ((message = input.readLine()) != null) {
+                    System.out.println(message);
                 }
             } catch (IOException e) {
-                System.err.println("Błąd odczytu servera: " + e.getMessage());
+                System.out.println("Błąd w odbieraniu wiadomości: " + e.getMessage());
             }
         }
     }
@@ -55,8 +70,11 @@ public class ChatClient {
         String serverAddress = connectServer.nextLine();
         System.out.print("Wprowadź port servera: ");
         int port = connectServer.nextInt();
-        
-        new ChatClient(serverAddress, port);
+
+
+        ChatClient client = new ChatClient();
+        client.startClient(serverAddress, port); 
         connectServer.close();
+
     }
 }
