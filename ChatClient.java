@@ -5,11 +5,6 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-
 
 public class ChatClient extends JFrame {
     private JTextArea chatArea;
@@ -24,8 +19,8 @@ public class ChatClient extends JFrame {
     private Socket socket;
 
     public ChatClient(String serverAddress, int port) {
-        setTitle("Chat Client");
-        setSize(300, 150); 
+        setTitle("CHAT");
+        setSize(300, 150);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -36,8 +31,7 @@ public class ChatClient extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
-        JLabel usernameLabel = new JLabel("Uzytkownik:");
-        loginPanel.add(usernameLabel, gbc);
+        loginPanel.add(new JLabel("U\u017Cytkownik:"), gbc);
 
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -47,8 +41,7 @@ public class ChatClient extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.NONE;
-        loginPanel.add(new JLabel("Haslo:"), gbc);
-
+        loginPanel.add(new JLabel("Has\u0142o:"), gbc);
 
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -61,11 +54,11 @@ public class ChatClient extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         loginButton = new JButton("Zaloguj");
         loginPanel.add(loginButton, gbc);
+        getRootPane().setDefaultButton(loginButton);
 
         setLayout(new BorderLayout());
         add(loginPanel, BorderLayout.CENTER);
 
-        System.setProperty("file.encoding", "UTF-8");
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -76,7 +69,6 @@ public class ChatClient extends JFrame {
                     reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
                     writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
 
-
                     writer.println(username + ":" + password);
 
                     String response = reader.readLine();
@@ -85,7 +77,7 @@ public class ChatClient extends JFrame {
 
                         loginPanel.setVisible(false);
                         initializeChatComponents();
-                        setSize(400, 500); 
+                        setSize(400, 500);
                         revalidate();
                         repaint();
 
@@ -109,7 +101,7 @@ public class ChatClient extends JFrame {
         chatScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         messageField = new JTextField();
-        sendButton = new JButton("Wyslij");
+        sendButton = new JButton("Wy\u015Blij");
 
         JPanel messagePanel = new JPanel(new BorderLayout());
         messagePanel.add(messageField, BorderLayout.CENTER);
@@ -151,17 +143,80 @@ public class ChatClient extends JFrame {
                     chatArea.append(message + "\n");
                 }
             } catch (IOException ex) {
-                chatArea.append("Polaczenie z serwerem przerwane.\n");
+                chatArea.append("Connection to server lost.\n");
             }
         }
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            String serverAddress = JOptionPane.showInputDialog("Wprowadz adres serwera:");
-            int port = Integer.parseInt(JOptionPane.showInputDialog("Wprowadz port serwera:"));
-            ChatClient client = new ChatClient(serverAddress, port);
-            client.setVisible(true);
+            JFrame frame = new JFrame();
+            frame.setUndecorated(true);
+            frame.setSize(1, 1);
+            frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+
+            JPanel panel = new JPanel(new BorderLayout());
+            panel.add(new JLabel("Wprowad\u017A adres serwera:"), BorderLayout.NORTH);
+            JTextField serverField = new JTextField(20);
+            panel.add(serverField, BorderLayout.CENTER);
+
+            final JOptionPane optionPane = new JOptionPane(panel, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
+            optionPane.setOptions(new Object[]{"OK", "Anuluj"});
+            JDialog dialog = optionPane.createDialog(frame, "\u0141\u0105czenie z chatem");
+
+            dialog.setModal(true);
+            dialog.setVisible(true);
+
+            Object selectedValue = optionPane.getValue();
+            frame.dispose();
+
+            if ("OK".equals(selectedValue)) {
+                String serverAddress = serverField.getText();
+                if (serverAddress == null || serverAddress.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Adres serwera nie zosta\u0142 podany.", "B\u0142\u0105d", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                JFrame portFrame = new JFrame();
+                portFrame.setUndecorated(true);
+                portFrame.setSize(1, 1);
+                portFrame.setLocationRelativeTo(null);
+                portFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                portFrame.setVisible(true);
+
+                JPanel portPanel = new JPanel(new BorderLayout());
+                portPanel.add(new JLabel("Wprowad\u017A port serwera:"), BorderLayout.NORTH);
+                JTextField portField = new JTextField(10);
+                portPanel.add(portField, BorderLayout.CENTER);
+
+                final JOptionPane portOptionPane = new JOptionPane(portPanel, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
+                portOptionPane.setOptions(new Object[]{"OK", "Anuluj"});
+                JDialog portDialog = portOptionPane.createDialog(portFrame, "\u0141\u0105czenie z chatem");
+
+                portDialog.setModal(true);
+                portDialog.setVisible(true);
+
+                Object portSelectedValue = portOptionPane.getValue();
+                portFrame.dispose();
+
+                if ("OK".equals(portSelectedValue)) {
+                    String portStr = portField.getText();
+                    if (portStr == null || portStr.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Port serwera nie zosta\u0142 podany.", "B\u0142\u0105d", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    try {
+                        int port = Integer.parseInt(portStr);
+                        ChatClient client = new ChatClient(serverAddress, port);
+                        client.setVisible(true);
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(null, "Port musi by\u0107 liczb\u0105.", "B\u0142\u0105d", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
         });
     }
 }

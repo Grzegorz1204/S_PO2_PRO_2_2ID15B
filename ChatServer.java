@@ -1,15 +1,19 @@
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.nio.charset.StandardCharsets;
 
 public class ChatServer {
     private ServerSocket serverSocket;
-    private List<ClientHandler> clients = new ArrayList<>();
+    private List<ClientHandler> clients = new CopyOnWriteArrayList<>();
 
     public void startServer(int port) {
         try {
             serverSocket = new ServerSocket(port);
             System.out.println("Serwer uruchomiony na porcie " + port);
+
+            new Thread(this::listenForCommands).start();
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
@@ -23,6 +27,38 @@ public class ChatServer {
             }
         } catch (IOException e) {
             System.out.println("Błąd podczas uruchamiania serwera: " + e.getMessage());
+        }
+    }
+
+    private void listenForCommands() {
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                String command = scanner.nextLine();
+                if (command.startsWith("KICK ")) {
+                    String usernameToKick = command.substring(5).trim();
+                    kickUser(usernameToKick);
+                } else if (command.startsWith("SEND ")) {
+                    String message = command.substring(4).trim();
+                    sendServerMessage(message);
+                }
+            }
+        }
+    }
+
+    private void sendServerMessage(String message) {
+        for (ClientHandler client : clients) {
+            client.sendMessage("Pan Admin: " + message);
+        }
+        System.out.println("Wiadomość od serwera wysłana do wszystkich klientów: " + message);
+    }
+
+    private void kickUser(String username) {
+        for (ClientHandler client : clients) {
+            if (client.getUsername() != null && client.getUsername().equals(username)) {
+                client.disconnect();
+                System.out.println("Użytkownik " + username + " został rozłączony przez administratora.");
+                break;
+            }
         }
     }
 
@@ -54,18 +90,25 @@ public class ChatServer {
         private BufferedReader input;
         private PrintWriter output;
         private String username;
+        private boolean isDisconnected = false;
 
         public ClientHandler(Socket socket) {
             this.clientSocket = socket;
+            try {
+                this.input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), StandardCharsets.UTF_8));
+                this.output = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream(), StandardCharsets.UTF_8), true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public String getUsername() {
+            return username;
         }
 
         @Override
         public void run() {
             try {
-                input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                output = new PrintWriter(clientSocket.getOutputStream(), true);
-
-                // Odbieranie loginu i hasła
                 String credentials = input.readLine();
                 String[] userData = credentials.split(":");
 
@@ -88,18 +131,31 @@ public class ChatServer {
             } catch (IOException e) {
                 System.out.println("Błąd w obsłudze klienta: " + e.getMessage());
             } finally {
-                try {
-                    clientSocket.close();
-                    clients.remove(this);
-                    System.out.println("Klient " + username + " rozłączony.");
-                } catch (IOException e) {
-                    System.out.println("Błąd podczas zamykania gniazda klienta: " + e.getMessage());
-                }
+                disconnect();
             }
         }
 
         private void sendMessage(String message) {
             output.println(message);
+        }
+
+        public void disconnect() {
+            if (!isDisconnected) {
+                isDisconnected = true;
+                try {
+                    if (output != null) {
+                        output.println("Zostałeś rozłączony przez administratora.");
+                        output.flush();
+                    }
+                    clients.remove(this);
+                    if (clientSocket != null && !clientSocket.isClosed()) {
+                        clientSocket.close();
+                    }
+                    System.out.println("Klient " + username + " rozłączony.");
+                } catch (IOException e) {
+                    System.out.println("Błąd podczas zamykania gniazda klienta: " + e.getMessage());
+                }
+            }
         }
     }
 
