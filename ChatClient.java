@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class ChatClient extends JFrame {
     private JTextArea chatArea;
@@ -69,7 +71,8 @@ public class ChatClient extends JFrame {
                     reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
                     writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
 
-                    writer.println(username + ":" + password);
+                    String hashedPassword = hashPassword(password);
+                    writer.println(username + ":" + hashedPassword);
 
                     String response = reader.readLine();
                     if ("Logowanie udane".equals(response)) {
@@ -90,6 +93,20 @@ public class ChatClient extends JFrame {
                 }
             }
         });
+    }
+
+    private String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : encodedHash) {
+                hexString.append(String.format("%02x", b));
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256 not supported");
+        }
     }
 
     private void initializeChatComponents() {

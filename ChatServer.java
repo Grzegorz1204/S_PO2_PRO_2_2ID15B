@@ -1,8 +1,10 @@
 import java.io.*;
 import java.net.*;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.nio.charset.StandardCharsets;
 
 public class ChatServer {
     private ServerSocket serverSocket;
@@ -19,7 +21,7 @@ public class ChatServer {
                 Socket clientSocket = serverSocket.accept();
                 InetAddress clientAddress = clientSocket.getInetAddress();
                 int clientPort = clientSocket.getPort();
-                System.out.println("Nowy klient połączony(" + clientAddress.getHostAddress() + ":" + clientPort + ")");
+                System.out.println("Nowy klient połączony (" + clientAddress.getHostAddress() + ":" + clientPort + ")");
 
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
                 clients.add(clientHandler);
@@ -62,12 +64,12 @@ public class ChatServer {
         }
     }
 
-    private boolean verifyUserCredentials(String username, String password) {
+    private boolean verifyUserCredentials(String username, String hashedPassword) {
         try (BufferedReader br = new BufferedReader(new FileReader("users.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] userData = line.split(":");
-                if (userData.length == 2 && userData[0].equals(username) && userData[1].equals(password)) {
+                if (userData.length == 2 && userData[0].equals(username) && userData[1].equals(hashedPassword)) {
                     return true;
                 }
             }
@@ -161,6 +163,6 @@ public class ChatServer {
 
     public static void main(String[] args) {
         ChatServer server = new ChatServer();
-        server.startServer(50000); 
+        server.startServer(50000);
     }
 }
