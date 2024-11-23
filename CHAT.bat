@@ -1,2 +1,2 @@
 @echo off
-start /min java ChatClient.java
+start /min java src/ChatClient.java

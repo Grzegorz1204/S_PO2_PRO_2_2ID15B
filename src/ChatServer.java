@@ -7,8 +7,8 @@ import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ChatServer {
-    private ServerSocket serverSocket;
-    private List<ClientHandler> clients = new CopyOnWriteArrayList<>();
+    protected ServerSocket serverSocket;
+    protected List<ClientHandler> clients = new CopyOnWriteArrayList<>();
 
     public void startServer(int port) {
         try {
@@ -17,44 +17,66 @@ public class ChatServer {
 
             new Thread(this::listenForCommands).start();
 
-            while (true) {
+            while (!serverSocket.isClosed()) {
                 Socket clientSocket = serverSocket.accept();
-                InetAddress clientAddress = clientSocket.getInetAddress();
-                int clientPort = clientSocket.getPort();
-                System.out.println("Nowy klient połączony (" + clientAddress.getHostAddress() + ":" + clientPort + ")");
+                System.out.println("Nowy klient połączony: " + clientSocket.getRemoteSocketAddress());
 
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
                 clients.add(clientHandler);
                 clientHandler.start();
             }
         } catch (IOException e) {
-            System.out.println("Błąd podczas uruchamiania serwera: " + e.getMessage());
+            if (serverSocket.isClosed()) {
+                System.out.println("Serwer został zamknięty.");
+            } else {
+                System.out.println("Błąd podczas uruchamiania serwera: " + e.getMessage());
+            }
+        } finally {
+            stopServer();
         }
     }
 
-    private void listenForCommands() {
+    public void stopServer() {
+        try {
+            if (serverSocket != null && !serverSocket.isClosed()) {
+                serverSocket.close();
+            }
+            for (ClientHandler client : clients) {
+                client.disconnect();
+            }
+            clients.clear();
+            System.out.println("Serwer został pomyślnie zamknięty.");
+        } catch (IOException e) {
+            System.out.println("Błąd podczas zamykania serwera: " + e.getMessage());
+        }
+    }
+
+    protected void listenForCommands() {
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 String command = scanner.nextLine();
-                if (command.startsWith("KICK ")) {
+                if ("STOP".equalsIgnoreCase(command)) {
+                    stopServer();
+                    break;
+                } else if (command.startsWith("KICK ")) {
                     String usernameToKick = command.substring(5).trim();
                     kickUser(usernameToKick);
                 } else if (command.startsWith("SEND ")) {
-                    String message = command.substring(4).trim();
+                    String message = command.substring(5).trim();
                     sendServerMessage(message);
                 }
             }
         }
     }
 
-    private void sendServerMessage(String message) {
+    protected void sendServerMessage(String message) {
         for (ClientHandler client : clients) {
             client.sendMessage("Pan Admin: " + message);
         }
         System.out.println("Wiadomość od serwera wysłana do wszystkich klientów: " + message);
     }
 
-    private void kickUser(String username) {
+    protected void kickUser(String username) {
         for (ClientHandler client : clients) {
             if (client.getUsername() != null && client.getUsername().equals(username)) {
                 client.disconnect();
@@ -64,7 +86,7 @@ public class ChatServer {
         }
     }
 
-    private boolean verifyUserCredentials(String username, String hashedPassword) {
+    protected boolean verifyUserCredentials(String username, String hashedPassword) {
         try (BufferedReader br = new BufferedReader(new FileReader("users.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -79,7 +101,7 @@ public class ChatServer {
         return false;
     }
 
-    private void broadcastMessage(String message, ClientHandler sender) {
+    protected void broadcastMessage(String message, ClientHandler sender) {
         for (ClientHandler client : clients) {
             if (client != sender) {
                 client.sendMessage(message);
@@ -87,12 +109,12 @@ public class ChatServer {
         }
     }
 
-    private class ClientHandler extends Thread {
-        private Socket clientSocket;
-        private BufferedReader input;
-        private PrintWriter output;
-        private String username;
-        private boolean isDisconnected = false;
+    protected class ClientHandler extends Thread {
+        protected Socket clientSocket;
+        protected BufferedReader input;
+        protected PrintWriter output;
+        protected String username;
+        protected boolean isDisconnected = false;
 
         public ClientHandler(Socket socket) {
             this.clientSocket = socket;
@@ -113,12 +135,12 @@ public class ChatServer {
             try {
                 String credentials = input.readLine();
                 String[] userData = credentials.split(":");
-
+        
                 if (userData.length == 2 && verifyUserCredentials(userData[0], userData[1])) {
                     username = userData[0];
                     output.println("Logowanie udane");
                     System.out.println("Użytkownik " + username + " zalogował się pomyślnie.");
-
+        
                     String message;
                     while ((message = input.readLine()) != null) {
                         System.out.println(username + ": " + message);
@@ -129,15 +151,20 @@ public class ChatServer {
                     System.out.println("Nieudana próba logowania.");
                     clientSocket.close();
                 }
-
+        
             } catch (IOException e) {
-                System.out.println("Błąd w obsłudze klienta: " + e.getMessage());
+                if (e.getMessage().contains("Socket closed")) {
+                    System.out.println("Gniazdo zamknięte przez klienta: " + username);
+                } else {
+                    System.out.println("Błąd w obsłudze klienta: " + e.getMessage());
+                }
             } finally {
                 disconnect();
             }
         }
+        
 
-        private void sendMessage(String message) {
+        protected void sendMessage(String message) {
             output.println(message);
         }
 

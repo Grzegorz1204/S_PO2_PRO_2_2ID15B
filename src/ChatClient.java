@@ -9,20 +9,20 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class ChatClient extends JFrame {
-    private JTextArea chatArea;
-    private JTextField messageField;
-    private JButton sendButton;
-    private JTextField usernameField;
-    private JPasswordField passwordField;
-    private JButton loginButton;
+    protected JTextArea chatArea;
+    protected JTextField messageField;
+    protected JButton sendButton;
+    protected JTextField usernameField;
+    protected JPasswordField passwordField;
+    protected JButton loginButton;
 
-    private BufferedReader reader;
-    private PrintWriter writer;
-    private Socket socket;
+    protected BufferedReader reader;
+    protected PrintWriter writer;
+    protected Socket socket;
 
     public ChatClient(String serverAddress, int port) {
         setTitle("CHAT");
-        setSize(300, 150);
+        setSize(400, 150);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -95,7 +95,7 @@ public class ChatClient extends JFrame {
         });
     }
 
-    private String hashPassword(String password) {
+    protected String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
@@ -109,7 +109,7 @@ public class ChatClient extends JFrame {
         }
     }
 
-    private void initializeChatComponents() {
+    protected void initializeChatComponents() {
         chatArea = new JTextArea();
         chatArea.setEditable(false);
         chatArea.setLineWrap(true);
@@ -142,7 +142,7 @@ public class ChatClient extends JFrame {
         });
     }
 
-    private void sendMessage() {
+    protected void sendMessage() {
         String message = messageField.getText();
         if (!message.isEmpty()) {
             chatArea.append("Ty: " + message + "\n");
@@ -151,7 +151,7 @@ public class ChatClient extends JFrame {
         }
     }
 
-    private class IncomingReader implements Runnable {
+    protected class IncomingReader implements Runnable {
         @Override
         public void run() {
             String message;
@@ -160,8 +160,8 @@ public class ChatClient extends JFrame {
                     chatArea.append(message + "\n");
                 }
             } catch (IOException ex) {
-                chatArea.append("Connection to server lost.\n");
-            }
+                chatArea.append("Connection to server lost: " + ex.getMessage() + "\n");
+            }            
         }
     }
 
