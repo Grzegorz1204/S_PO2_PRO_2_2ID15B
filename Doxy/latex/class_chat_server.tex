@@ -1,0 +1,206 @@
+\doxysection{Chat\+Server Class Reference}
+\hypertarget{class_chat_server}{}\label{class_chat_server}\index{ChatServer@{ChatServer}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_chat_server_1_1_client_handler}{Client\+Handler}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_chat_server_a30d14f1381c17d88640673f49cb26612}{start\+Server}} (int port)
+\item 
+void \mbox{\hyperlink{class_chat_server_ad2cdfde797dfcd6ee810717c2cc60193}{stop\+Server}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_chat_server_a3a3e91d84cc955d20e4497eb73390d7a}{main}} (String\mbox{[}$\,$\mbox{]} args)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_chat_server_a50ec21ab105b93f749008b8935b9eb9a}{listen\+For\+Commands}} ()
+\item 
+void \mbox{\hyperlink{class_chat_server_ad1b90a232b4ae93efe4effa858bc1206}{send\+Server\+Message}} (String message)
+\item 
+void \mbox{\hyperlink{class_chat_server_a317bbd2d6fb94d6283f76298cd91fd18}{kick\+User}} (String username)
+\item 
+boolean \mbox{\hyperlink{class_chat_server_afb4281bef66e323bae0fb1b8bc6d794e}{verify\+User\+Credentials}} (String username, String hashed\+Password)
+\item 
+void \mbox{\hyperlink{class_chat_server_a3dcadea2a915e367067d111908881053}{broadcast\+Message}} (String message, \mbox{\hyperlink{class_chat_server_1_1_client_handler}{Client\+Handler}} sender)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Server\+Socket \mbox{\hyperlink{class_chat_server_a04507104b232b2696a940f78c642c3d4}{server\+Socket}}
+\item 
+List$<$ \mbox{\hyperlink{class_chat_server_1_1_client_handler}{Client\+Handler}} $>$ \mbox{\hyperlink{class_chat_server_a816d47c2cc94819bdda1d20f355063f8}{clients}} = new Copy\+On\+Write\+Array\+List$<$$>$()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Klasa reprezentująca serwer czatu. Obsługuje wielu klientów, pozwala na przesyłanie wiadomości, weryfikację użytkowników oraz zarządzanie użytkownikami przez administratora. 
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00014}{14}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_chat_server_a3dcadea2a915e367067d111908881053}\index{ChatServer@{ChatServer}!broadcastMessage@{broadcastMessage}}
+\index{broadcastMessage@{broadcastMessage}!ChatServer@{ChatServer}}
+\doxysubsubsection{\texorpdfstring{broadcastMessage()}{broadcastMessage()}}
+{\footnotesize\ttfamily \label{class_chat_server_a3dcadea2a915e367067d111908881053} 
+void Chat\+Server.\+broadcast\+Message (\begin{DoxyParamCaption}\item[{String}]{message}{, }\item[{\mbox{\hyperlink{class_chat_server_1_1_client_handler}{Client\+Handler}}}]{sender}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Rozsyła wiadomość od jednego klienta do pozostałych.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & Wiadomość do wysłania. \\
+\hline
+{\em sender} & Klient, który wysłał wiadomość. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00153}{153}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+\Hypertarget{class_chat_server_a317bbd2d6fb94d6283f76298cd91fd18}\index{ChatServer@{ChatServer}!kickUser@{kickUser}}
+\index{kickUser@{kickUser}!ChatServer@{ChatServer}}
+\doxysubsubsection{\texorpdfstring{kickUser()}{kickUser()}}
+{\footnotesize\ttfamily \label{class_chat_server_a317bbd2d6fb94d6283f76298cd91fd18} 
+void Chat\+Server.\+kick\+User (\begin{DoxyParamCaption}\item[{String}]{username}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Rozłącza użytkownika o podanej nazwie.
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Nazwa użytkownika do rozłączenia. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00115}{115}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+\Hypertarget{class_chat_server_a50ec21ab105b93f749008b8935b9eb9a}\index{ChatServer@{ChatServer}!listenForCommands@{listenForCommands}}
+\index{listenForCommands@{listenForCommands}!ChatServer@{ChatServer}}
+\doxysubsubsection{\texorpdfstring{listenForCommands()}{listenForCommands()}}
+{\footnotesize\ttfamily \label{class_chat_server_a50ec21ab105b93f749008b8935b9eb9a} 
+void Chat\+Server.\+listen\+For\+Commands (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Nasłuchuje komendy administratora (STOP, KICK, SEND). 
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00080}{80}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+\Hypertarget{class_chat_server_a3a3e91d84cc955d20e4497eb73390d7a}\index{ChatServer@{ChatServer}!main@{main}}
+\index{main@{main}!ChatServer@{ChatServer}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{class_chat_server_a3a3e91d84cc955d20e4497eb73390d7a} 
+static void Chat\+Server.\+main (\begin{DoxyParamCaption}\item[{String\mbox{[}$\,$\mbox{]}}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Punkt wejścia aplikacji.
+
+
+\begin{DoxyParams}{Parameters}
+{\em args} & Argumenty wejściowe. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00289}{289}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+\Hypertarget{class_chat_server_ad1b90a232b4ae93efe4effa858bc1206}\index{ChatServer@{ChatServer}!sendServerMessage@{sendServerMessage}}
+\index{sendServerMessage@{sendServerMessage}!ChatServer@{ChatServer}}
+\doxysubsubsection{\texorpdfstring{sendServerMessage()}{sendServerMessage()}}
+{\footnotesize\ttfamily \label{class_chat_server_ad1b90a232b4ae93efe4effa858bc1206} 
+void Chat\+Server.\+send\+Server\+Message (\begin{DoxyParamCaption}\item[{String}]{message}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Wysyła wiadomość serwera do wszystkich klientów.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & Wiadomość do wysłania. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00103}{103}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+\Hypertarget{class_chat_server_a30d14f1381c17d88640673f49cb26612}\index{ChatServer@{ChatServer}!startServer@{startServer}}
+\index{startServer@{startServer}!ChatServer@{ChatServer}}
+\doxysubsubsection{\texorpdfstring{startServer()}{startServer()}}
+{\footnotesize\ttfamily \label{class_chat_server_a30d14f1381c17d88640673f49cb26612} 
+void Chat\+Server.\+start\+Server (\begin{DoxyParamCaption}\item[{int}]{port}{}\end{DoxyParamCaption})}
+
+Uruchamia serwer na podanym porcie.
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & Port, na którym serwer będzie nasłuchiwał. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00031}{31}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+\Hypertarget{class_chat_server_ad2cdfde797dfcd6ee810717c2cc60193}\index{ChatServer@{ChatServer}!stopServer@{stopServer}}
+\index{stopServer@{stopServer}!ChatServer@{ChatServer}}
+\doxysubsubsection{\texorpdfstring{stopServer()}{stopServer()}}
+{\footnotesize\ttfamily \label{class_chat_server_ad2cdfde797dfcd6ee810717c2cc60193} 
+void Chat\+Server.\+stop\+Server (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Zatrzymuje serwer i rozłącza wszystkich klientów. 
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00062}{62}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+\Hypertarget{class_chat_server_afb4281bef66e323bae0fb1b8bc6d794e}\index{ChatServer@{ChatServer}!verifyUserCredentials@{verifyUserCredentials}}
+\index{verifyUserCredentials@{verifyUserCredentials}!ChatServer@{ChatServer}}
+\doxysubsubsection{\texorpdfstring{verifyUserCredentials()}{verifyUserCredentials()}}
+{\footnotesize\ttfamily \label{class_chat_server_afb4281bef66e323bae0fb1b8bc6d794e} 
+boolean Chat\+Server.\+verify\+User\+Credentials (\begin{DoxyParamCaption}\item[{String}]{username}{, }\item[{String}]{hashed\+Password}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Weryfikuje dane logowania użytkownika na podstawie zapisanych danych.
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Nazwa użytkownika. \\
+\hline
+{\em hashed\+Password} & Zhashowane hasło użytkownika. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True, jeśli dane logowania są poprawne, w przeciwnym razie false. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00132}{132}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_chat_server_a816d47c2cc94819bdda1d20f355063f8}\index{ChatServer@{ChatServer}!clients@{clients}}
+\index{clients@{clients}!ChatServer@{ChatServer}}
+\doxysubsubsection{\texorpdfstring{clients}{clients}}
+{\footnotesize\ttfamily \label{class_chat_server_a816d47c2cc94819bdda1d20f355063f8} 
+List$<$\mbox{\hyperlink{class_chat_server_1_1_client_handler}{Client\+Handler}}$>$ Chat\+Server.\+clients = new Copy\+On\+Write\+Array\+List$<$$>$()\hspace{0.3cm}{\ttfamily [protected]}}
+
+Lista obsługiwanych klientów. 
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00024}{24}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+\Hypertarget{class_chat_server_a04507104b232b2696a940f78c642c3d4}\index{ChatServer@{ChatServer}!serverSocket@{serverSocket}}
+\index{serverSocket@{serverSocket}!ChatServer@{ChatServer}}
+\doxysubsubsection{\texorpdfstring{serverSocket}{serverSocket}}
+{\footnotesize\ttfamily \label{class_chat_server_a04507104b232b2696a940f78c642c3d4} 
+Server\+Socket Chat\+Server.\+server\+Socket\hspace{0.3cm}{\ttfamily [protected]}}
+
+Gniazdo serwera do akceptowania połączeń klientów. 
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00019}{19}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{_chat_server_8java}{Chat\+Server.\+java}}\end{DoxyCompactItemize}

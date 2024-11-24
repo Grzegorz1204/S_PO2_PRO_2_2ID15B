@@ -8,24 +8,42 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import java.net.*;
 
-
+/**
+ * Klasa testowa dla serwera i klienta czatu.
+ * Obejmuje testy poprawności logowania, przesyłania wiadomości oraz zarządzania użytkownikami.
+ */
 public class ChatServerAndClientTest {
-    
+
+    /**
+     * Instancja serwera czatu używana do testów.
+     */
     private ChatServer server;
+
+    /**
+     * Wątek uruchamiający serwer.
+     */
     private Thread serverThread;
 
+    /**
+     * Przygotowanie środowiska testowego przed każdym testem.
+     * Inicjalizuje serwer i uruchamia go w osobnym wątku.
+     */
     @BeforeEach
     void setUp() {
         server = new ChatServer();
         serverThread = new Thread(() -> server.startServer(50000));
         serverThread.start();
         try {
-            Thread.sleep(500);
+            Thread.sleep(500); // Czas na uruchomienie serwera
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Czyszczenie środowiska testowego po każdym teście.
+     * Zatrzymuje serwer i zamyka wątek serwera.
+     */
     @AfterEach
     void tearDown() throws IOException {
         if (server.serverSocket != null && !server.serverSocket.isClosed()) {
@@ -36,6 +54,10 @@ public class ChatServerAndClientTest {
         }
     }
 
+    /**
+     * Test logowania klienta z poprawnymi danymi.
+     * Sprawdza, czy serwer akceptuje poprawne dane logowania.
+     */
     @Test
     @DisplayName("Test logowania klienta z poprawnymi danymi")
     void testClientLoginSuccess() throws Exception {
@@ -59,9 +81,12 @@ public class ChatServerAndClientTest {
             System.out.println("Test logowania klienta z poprawnymi danymi nie powiódł się: " + e.getMessage());
             throw e;
         }
-        
     }
 
+    /**
+     * Test logowania klienta z niepoprawnymi danymi.
+     * Sprawdza, czy serwer odrzuca niepoprawne dane logowania.
+     */
     @Test
     @DisplayName("Test logowania klienta z niepoprawnymi danymi")
     void testClientLoginFailure() throws Exception {
@@ -82,6 +107,10 @@ public class ChatServerAndClientTest {
         }
     }
 
+    /**
+     * Test przesyłania wiadomości między dwoma klientami.
+     * Sprawdza, czy wiadomości są poprawnie przesyłane między klientami za pośrednictwem serwera.
+     */
     @Test
     @DisplayName("Test przesyłania wiadomości między klientami")
     void testMessageBroadcast() throws Exception {
@@ -117,6 +146,10 @@ public class ChatServerAndClientTest {
         }
     }
 
+    /**
+     * Test wyrzucenia klienta przez administratora.
+     * Sprawdza, czy klient otrzymuje odpowiednią wiadomość i jest rozłączony.
+     */
     @Test
     @DisplayName("Test wyrzucenia klienta przez administratora")
     void testKickUser() throws Exception {
@@ -144,6 +177,12 @@ public class ChatServerAndClientTest {
         }
     }
 
+    /**
+     * Hashuje hasło przy użyciu algorytmu SHA-256.
+     *
+     * @param password Hasło do zhashowania.
+     * @return Zhashowane hasło w formacie szesnastkowym.
+     */
     private String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

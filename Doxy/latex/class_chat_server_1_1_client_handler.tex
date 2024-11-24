@@ -1,0 +1,177 @@
+\doxysection{Chat\+Server.\+Client\+Handler Class Reference}
+\hypertarget{class_chat_server_1_1_client_handler}{}\label{class_chat_server_1_1_client_handler}\index{ChatServer.ClientHandler@{ChatServer.ClientHandler}}
+Inheritance diagram for Chat\+Server.\+Client\+Handler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_chat_server_1_1_client_handler}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_chat_server_1_1_client_handler_ab138f2f6faac21fd4a5e1d15779cf3fa}{Client\+Handler}} (Socket socket)
+\item 
+String \mbox{\hyperlink{class_chat_server_1_1_client_handler_af61d8f6afe3baefa12044892eb0d5d0a}{get\+Username}} ()
+\item 
+void \mbox{\hyperlink{class_chat_server_1_1_client_handler_a629c355f22cf14a6abc96e03f478c362}{run}} ()
+\item 
+void \mbox{\hyperlink{class_chat_server_1_1_client_handler_aa398aba598741f124bf3cca3fedda0e5}{disconnect}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_chat_server_1_1_client_handler_af457799408cfd7dfa5e8744dc0784fb8}{send\+Message}} (String message)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Socket \mbox{\hyperlink{class_chat_server_1_1_client_handler_abbb2a24baccfc9d1a7e913ff0227cd42}{client\+Socket}}
+\item 
+Buffered\+Reader \mbox{\hyperlink{class_chat_server_1_1_client_handler_a93a667e33dbff0d7de9fd23693c7f73c}{input}}
+\item 
+Print\+Writer \mbox{\hyperlink{class_chat_server_1_1_client_handler_a9e139818fc135b0a7e268a9c030a954e}{output}}
+\item 
+String \mbox{\hyperlink{class_chat_server_1_1_client_handler_a39dce557d42a48817e7baf5b114e9787}{username}}
+\item 
+boolean \mbox{\hyperlink{class_chat_server_1_1_client_handler_ab1f45eab22c5494acb56a463edfd635b}{is\+Disconnected}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Klasa reprezentująca pojedynczego klienta. Odpowiada za obsługę połączenia z klientem, odbieranie i wysyłanie wiadomości. 
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00165}{165}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_chat_server_1_1_client_handler_ab138f2f6faac21fd4a5e1d15779cf3fa}\index{ChatServer.ClientHandler@{ChatServer.ClientHandler}!ClientHandler@{ClientHandler}}
+\index{ClientHandler@{ClientHandler}!ChatServer.ClientHandler@{ChatServer.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{ClientHandler()}{ClientHandler()}}
+{\footnotesize\ttfamily \label{class_chat_server_1_1_client_handler_ab138f2f6faac21fd4a5e1d15779cf3fa} 
+Chat\+Server.\+Client\+Handler.\+Client\+Handler (\begin{DoxyParamCaption}\item[{Socket}]{socket}{}\end{DoxyParamCaption})}
+
+Konstruktor klasy \doxylink{class_chat_server_1_1_client_handler}{Client\+Handler}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket} & Gniazdo połączeniowe klienta. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00197}{197}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_chat_server_1_1_client_handler_aa398aba598741f124bf3cca3fedda0e5}\index{ChatServer.ClientHandler@{ChatServer.ClientHandler}!disconnect@{disconnect}}
+\index{disconnect@{disconnect}!ChatServer.ClientHandler@{ChatServer.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{disconnect()}{disconnect()}}
+{\footnotesize\ttfamily \label{class_chat_server_1_1_client_handler_aa398aba598741f124bf3cca3fedda0e5} 
+void Chat\+Server.\+Client\+Handler.\+disconnect (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Rozłącza klienta i zamyka jego zasoby. 
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00264}{264}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+\Hypertarget{class_chat_server_1_1_client_handler_af61d8f6afe3baefa12044892eb0d5d0a}\index{ChatServer.ClientHandler@{ChatServer.ClientHandler}!getUsername@{getUsername}}
+\index{getUsername@{getUsername}!ChatServer.ClientHandler@{ChatServer.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{getUsername()}{getUsername()}}
+{\footnotesize\ttfamily \label{class_chat_server_1_1_client_handler_af61d8f6afe3baefa12044892eb0d5d0a} 
+String Chat\+Server.\+Client\+Handler.\+get\+Username (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Zwraca nazwę użytkownika klienta.
+
+\begin{DoxyReturn}{Returns}
+Nazwa użytkownika. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00212}{212}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+\Hypertarget{class_chat_server_1_1_client_handler_a629c355f22cf14a6abc96e03f478c362}\index{ChatServer.ClientHandler@{ChatServer.ClientHandler}!run@{run}}
+\index{run@{run}!ChatServer.ClientHandler@{ChatServer.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily \label{class_chat_server_1_1_client_handler_a629c355f22cf14a6abc96e03f478c362} 
+void Chat\+Server.\+Client\+Handler.\+run (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Główna pętla wątku obsługująca komunikację z klientem. 
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00220}{220}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+\Hypertarget{class_chat_server_1_1_client_handler_af457799408cfd7dfa5e8744dc0784fb8}\index{ChatServer.ClientHandler@{ChatServer.ClientHandler}!sendMessage@{sendMessage}}
+\index{sendMessage@{sendMessage}!ChatServer.ClientHandler@{ChatServer.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{sendMessage()}{sendMessage()}}
+{\footnotesize\ttfamily \label{class_chat_server_1_1_client_handler_af457799408cfd7dfa5e8744dc0784fb8} 
+void Chat\+Server.\+Client\+Handler.\+send\+Message (\begin{DoxyParamCaption}\item[{String}]{message}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Wysyła wiadomość do klienta.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & Wiadomość do wysłania. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00257}{257}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_chat_server_1_1_client_handler_abbb2a24baccfc9d1a7e913ff0227cd42}\index{ChatServer.ClientHandler@{ChatServer.ClientHandler}!clientSocket@{clientSocket}}
+\index{clientSocket@{clientSocket}!ChatServer.ClientHandler@{ChatServer.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{clientSocket}{clientSocket}}
+{\footnotesize\ttfamily \label{class_chat_server_1_1_client_handler_abbb2a24baccfc9d1a7e913ff0227cd42} 
+Socket Chat\+Server.\+Client\+Handler.\+client\+Socket\hspace{0.3cm}{\ttfamily [protected]}}
+
+Gniazdo połączeniowe klienta. 
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00170}{170}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+\Hypertarget{class_chat_server_1_1_client_handler_a93a667e33dbff0d7de9fd23693c7f73c}\index{ChatServer.ClientHandler@{ChatServer.ClientHandler}!input@{input}}
+\index{input@{input}!ChatServer.ClientHandler@{ChatServer.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{input}{input}}
+{\footnotesize\ttfamily \label{class_chat_server_1_1_client_handler_a93a667e33dbff0d7de9fd23693c7f73c} 
+Buffered\+Reader Chat\+Server.\+Client\+Handler.\+input\hspace{0.3cm}{\ttfamily [protected]}}
+
+Strumień wejściowy do odbierania wiadomości od klienta. 
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00175}{175}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+\Hypertarget{class_chat_server_1_1_client_handler_ab1f45eab22c5494acb56a463edfd635b}\index{ChatServer.ClientHandler@{ChatServer.ClientHandler}!isDisconnected@{isDisconnected}}
+\index{isDisconnected@{isDisconnected}!ChatServer.ClientHandler@{ChatServer.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{isDisconnected}{isDisconnected}}
+{\footnotesize\ttfamily \label{class_chat_server_1_1_client_handler_ab1f45eab22c5494acb56a463edfd635b} 
+boolean Chat\+Server.\+Client\+Handler.\+is\+Disconnected = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+Flaga wskazująca, czy klient został rozłączony. 
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00190}{190}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+\Hypertarget{class_chat_server_1_1_client_handler_a9e139818fc135b0a7e268a9c030a954e}\index{ChatServer.ClientHandler@{ChatServer.ClientHandler}!output@{output}}
+\index{output@{output}!ChatServer.ClientHandler@{ChatServer.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{output}{output}}
+{\footnotesize\ttfamily \label{class_chat_server_1_1_client_handler_a9e139818fc135b0a7e268a9c030a954e} 
+Print\+Writer Chat\+Server.\+Client\+Handler.\+output\hspace{0.3cm}{\ttfamily [protected]}}
+
+Strumień wyjściowy do wysyłania wiadomości do klienta. 
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00180}{180}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+\Hypertarget{class_chat_server_1_1_client_handler_a39dce557d42a48817e7baf5b114e9787}\index{ChatServer.ClientHandler@{ChatServer.ClientHandler}!username@{username}}
+\index{username@{username}!ChatServer.ClientHandler@{ChatServer.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{username}{username}}
+{\footnotesize\ttfamily \label{class_chat_server_1_1_client_handler_a39dce557d42a48817e7baf5b114e9787} 
+String Chat\+Server.\+Client\+Handler.\+username\hspace{0.3cm}{\ttfamily [protected]}}
+
+Nazwa użytkownika klienta. 
+
+Definition at line \mbox{\hyperlink{_chat_server_8java_source_l00185}{185}} of file \mbox{\hyperlink{_chat_server_8java_source}{Chat\+Server.\+java}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{_chat_server_8java}{Chat\+Server.\+java}}\end{DoxyCompactItemize}

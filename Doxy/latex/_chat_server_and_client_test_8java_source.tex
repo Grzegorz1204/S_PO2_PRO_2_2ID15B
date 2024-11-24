@@ -1,0 +1,165 @@
+\doxysection{Chat\+Server\+And\+Client\+Test.\+java}
+\hypertarget{_chat_server_and_client_test_8java_source}{}\label{_chat_server_and_client_test_8java_source}\index{src\_test/ChatServerAndClientTest.java@{src\_test/ChatServerAndClientTest.java}}
+\mbox{\hyperlink{_chat_server_and_client_test_8java}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00001}00001\ \textcolor{keyword}{import}\ org.junit.jupiter.api.*;}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00002}00002\ \textcolor{keyword}{import}\ java.io.*;}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00003}00003\ \textcolor{keyword}{import}\ java.nio.charset.StandardCharsets;}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00004}00004\ \textcolor{keyword}{import}\ java.security.MessageDigest;}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00005}00005\ \textcolor{keyword}{import}\ java.security.NoSuchAlgorithmException;}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00006}00006\ \textcolor{keyword}{import}\ org.mockito.*;}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00007}00007\ \textcolor{keyword}{import}\ \textcolor{keyword}{static}\ org.junit.jupiter.api.Assertions.*;}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00008}00008\ \textcolor{keyword}{import}\ \textcolor{keyword}{static}\ org.mockito.Mockito.*;}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00009}00009\ \textcolor{keyword}{import}\ java.net.*;}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00015}\mbox{\hyperlink{class_chat_server_and_client_test}{00015}}\ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_chat_server_and_client_test}{ChatServerAndClientTest}}\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00020}\mbox{\hyperlink{class_chat_server_and_client_test_af920dd011cd043922a433c46e73d0e29}{00020}}\ \ \ \ \ \textcolor{keyword}{private}\ \mbox{\hyperlink{class_chat_server}{ChatServer}}\ \mbox{\hyperlink{class_chat_server_and_client_test_af920dd011cd043922a433c46e73d0e29}{server}};}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00025}\mbox{\hyperlink{class_chat_server_and_client_test_a1730241e7f5806590881cb540b3eedf9}{00025}}\ \ \ \ \ \textcolor{keyword}{private}\ Thread\ \mbox{\hyperlink{class_chat_server_and_client_test_a1730241e7f5806590881cb540b3eedf9}{serverThread}};}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00031}00031\ \ \ \ \ @BeforeEach}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00032}\mbox{\hyperlink{class_chat_server_and_client_test_a66ba60c7c3be7f6a0dffe24c7c7788f3}{00032}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_chat_server_and_client_test_a66ba60c7c3be7f6a0dffe24c7c7788f3}{setUp}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00033}00033\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_chat_server_and_client_test_af920dd011cd043922a433c46e73d0e29}{server}}\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_chat_server}{ChatServer}}();}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00034}00034\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_chat_server_and_client_test_a1730241e7f5806590881cb540b3eedf9}{serverThread}}\ =\ \textcolor{keyword}{new}\ Thread(()\ -\/>\ \mbox{\hyperlink{class_chat_server_and_client_test_af920dd011cd043922a433c46e73d0e29}{server}}.\mbox{\hyperlink{class_chat_server_a30d14f1381c17d88640673f49cb26612}{startServer}}(50000));}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00035}00035\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_chat_server_and_client_test_a1730241e7f5806590881cb540b3eedf9}{serverThread}}.start();}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ Thread.sleep(500);\ \textcolor{comment}{//\ Czas\ na\ uruchomienie\ serwera}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00038}00038\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (InterruptedException\ e)\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ e.printStackTrace();}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00040}00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00041}00041\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00047}00047\ \ \ \ \ @AfterEach}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00048}\mbox{\hyperlink{class_chat_server_and_client_test_abe4084e83af979c450a3f92042964b01}{00048}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_chat_server_and_client_test_abe4084e83af979c450a3f92042964b01}{tearDown}}()\ throws\ IOException\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_chat_server_and_client_test_af920dd011cd043922a433c46e73d0e29}{server}}.\mbox{\hyperlink{class_chat_server_a04507104b232b2696a940f78c642c3d4}{serverSocket}}\ !=\ \textcolor{keyword}{null}\ \&\&\ !\mbox{\hyperlink{class_chat_server_and_client_test_af920dd011cd043922a433c46e73d0e29}{server}}.\mbox{\hyperlink{class_chat_server_a04507104b232b2696a940f78c642c3d4}{serverSocket}}.isClosed())\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_chat_server_and_client_test_af920dd011cd043922a433c46e73d0e29}{server}}.\mbox{\hyperlink{class_chat_server_a04507104b232b2696a940f78c642c3d4}{serverSocket}}.close();}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00051}00051\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_chat_server_and_client_test_a1730241e7f5806590881cb540b3eedf9}{serverThread}}\ !=\ \textcolor{keyword}{null}\ \&\&\ \mbox{\hyperlink{class_chat_server_and_client_test_a1730241e7f5806590881cb540b3eedf9}{serverThread}}.isAlive())\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_chat_server_and_client_test_a1730241e7f5806590881cb540b3eedf9}{serverThread}}.interrupt();}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00054}00054\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00055}00055\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00061}00061\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00062}00062\ \ \ \ \ @DisplayName(\textcolor{stringliteral}{"{}Test\ logowania\ klienta\ z\ poprawnymi\ danymi"{}})}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00063}\mbox{\hyperlink{class_chat_server_and_client_test_afdf5b5d840dc186c92731f97eb6d9e19}{00063}}\ \ \ \ \ void\ \mbox{\hyperlink{class_chat_server_and_client_test_afdf5b5d840dc186c92731f97eb6d9e19}{testClientLoginSuccess}}()\ throws\ Exception\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ (PrintWriter\ writer\ =\ \textcolor{keyword}{new}\ PrintWriter(\textcolor{keyword}{new}\ FileWriter(\textcolor{stringliteral}{"{}users.txt"{}})))\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ String\ hashedPassword\ =\ \mbox{\hyperlink{class_chat_server_and_client_test_aca47c3be157a66990a343aac32358e2f}{hashPassword}}(\textcolor{stringliteral}{"{}testPassword"{}});}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ writer.println(\textcolor{stringliteral}{"{}testUser:"{}}\ +\ hashedPassword);}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ (Socket\ socket\ =\ \textcolor{keyword}{new}\ Socket(\textcolor{stringliteral}{"{}localhost"{}},\ 50000);}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BufferedReader\ input\ =\ \textcolor{keyword}{new}\ BufferedReader(\textcolor{keyword}{new}\ InputStreamReader(socket.getInputStream(),\ StandardCharsets.UTF\_8));}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PrintWriter\ output\ =\ \textcolor{keyword}{new}\ PrintWriter(\textcolor{keyword}{new}\ OutputStreamWriter(socket.getOutputStream(),\ StandardCharsets.UTF\_8),\ \textcolor{keyword}{true}))\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ output.println(\textcolor{stringliteral}{"{}testUser:"{}}\ +\ \mbox{\hyperlink{class_chat_server_and_client_test_aca47c3be157a66990a343aac32358e2f}{hashPassword}}(\textcolor{stringliteral}{"{}testPassword"{}}));}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ String\ response\ =\ input.readLine();}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assertEquals(\textcolor{stringliteral}{"{}Logowanie\ udane"{}},\ response,\ \textcolor{stringliteral}{"{}Oczekiwano\ udanej\ odpowiedzi\ serwera\ po\ poprawnym\ logowaniu."{}});}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ System.out.println(\textcolor{stringliteral}{"{}Test\ logowania\ klienta\ z\ poprawnymi\ danymi\ zakończony\ sukcesem:\ "{}}\ +\ response);}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00080}00080\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (Exception\ e)\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ System.out.println(\textcolor{stringliteral}{"{}Test\ logowania\ klienta\ z\ poprawnymi\ danymi\ nie\ powiódł\ się:\ "{}}\ +\ e.getMessage());}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ e;}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00083}00083\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00084}00084\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00090}00090\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00091}00091\ \ \ \ \ @DisplayName(\textcolor{stringliteral}{"{}Test\ logowania\ klienta\ z\ niepoprawnymi\ danymi"{}})}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00092}\mbox{\hyperlink{class_chat_server_and_client_test_a294368f9869e4b0424d848002ec8f7d2}{00092}}\ \ \ \ \ void\ \mbox{\hyperlink{class_chat_server_and_client_test_a294368f9869e4b0424d848002ec8f7d2}{testClientLoginFailure}}()\ throws\ Exception\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00093}00093\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ (Socket\ socket\ =\ \textcolor{keyword}{new}\ Socket(\textcolor{stringliteral}{"{}localhost"{}},\ 50000);}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BufferedReader\ input\ =\ \textcolor{keyword}{new}\ BufferedReader(\textcolor{keyword}{new}\ InputStreamReader(socket.getInputStream(),\ StandardCharsets.UTF\_8));}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PrintWriter\ output\ =\ \textcolor{keyword}{new}\ PrintWriter(\textcolor{keyword}{new}\ OutputStreamWriter(socket.getOutputStream(),\ StandardCharsets.UTF\_8),\ \textcolor{keyword}{true}))\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ output.println(\textcolor{stringliteral}{"{}wrongUser:wrongPassword"{}});}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ String\ response\ =\ input.readLine();}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assertEquals(\textcolor{stringliteral}{"{}Nieprawidłowy\ login\ lub\ hasło"{}},\ response,\ \textcolor{stringliteral}{"{}Oczekiwano\ odpowiedzi\ o\ nieudanym\ logowaniu."{}});}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ System.out.println(\textcolor{stringliteral}{"{}Test\ logowania\ klienta\ z\ niepoprawnymi\ danymi\ zakończony\ sukcesem:\ "{}}\ +\ response);}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00104}00104\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (Exception\ e)\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ System.out.println(\textcolor{stringliteral}{"{}Test\ logowania\ klienta\ z\ niepoprawnymi\ danymi\ nie\ powiódł\ się:\ "{}}\ +\ e.getMessage());}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ e;}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00107}00107\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00108}00108\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00114}00114\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00115}00115\ \ \ \ \ @DisplayName(\textcolor{stringliteral}{"{}Test\ przesyłania\ wiadomości\ między\ klientami"{}})}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00116}\mbox{\hyperlink{class_chat_server_and_client_test_a9b9fb4a76afc819168830b85de26813f}{00116}}\ \ \ \ \ void\ \mbox{\hyperlink{class_chat_server_and_client_test_a9b9fb4a76afc819168830b85de26813f}{testMessageBroadcast}}()\ throws\ Exception\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00117}00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ (PrintWriter\ writer\ =\ \textcolor{keyword}{new}\ PrintWriter(\textcolor{keyword}{new}\ FileWriter(\textcolor{stringliteral}{"{}users.txt"{}})))\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ writer.println(\textcolor{stringliteral}{"{}user1:"{}}\ +\ \mbox{\hyperlink{class_chat_server_and_client_test_aca47c3be157a66990a343aac32358e2f}{hashPassword}}(\textcolor{stringliteral}{"{}password1"{}}));}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ writer.println(\textcolor{stringliteral}{"{}user2:"{}}\ +\ \mbox{\hyperlink{class_chat_server_and_client_test_aca47c3be157a66990a343aac32358e2f}{hashPassword}}(\textcolor{stringliteral}{"{}password2"{}}));}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ (Socket\ client1\ =\ \textcolor{keyword}{new}\ Socket(\textcolor{stringliteral}{"{}localhost"{}},\ 50000);}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BufferedReader\ input1\ =\ \textcolor{keyword}{new}\ BufferedReader(\textcolor{keyword}{new}\ InputStreamReader(client1.getInputStream(),\ StandardCharsets.UTF\_8));}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PrintWriter\ output1\ =\ \textcolor{keyword}{new}\ PrintWriter(\textcolor{keyword}{new}\ OutputStreamWriter(client1.getOutputStream(),\ StandardCharsets.UTF\_8),\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Socket\ client2\ =\ \textcolor{keyword}{new}\ Socket(\textcolor{stringliteral}{"{}localhost"{}},\ 50000);}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BufferedReader\ input2\ =\ \textcolor{keyword}{new}\ BufferedReader(\textcolor{keyword}{new}\ InputStreamReader(client2.getInputStream(),\ StandardCharsets.UTF\_8));}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PrintWriter\ output2\ =\ \textcolor{keyword}{new}\ PrintWriter(\textcolor{keyword}{new}\ OutputStreamWriter(client2.getOutputStream(),\ StandardCharsets.UTF\_8),\ \textcolor{keyword}{true}))\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ output1.println(\textcolor{stringliteral}{"{}user1:"{}}\ +\ \mbox{\hyperlink{class_chat_server_and_client_test_aca47c3be157a66990a343aac32358e2f}{hashPassword}}(\textcolor{stringliteral}{"{}password1"{}}));}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assertEquals(\textcolor{stringliteral}{"{}Logowanie\ udane"{}},\ input1.readLine());}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ output2.println(\textcolor{stringliteral}{"{}user2:"{}}\ +\ \mbox{\hyperlink{class_chat_server_and_client_test_aca47c3be157a66990a343aac32358e2f}{hashPassword}}(\textcolor{stringliteral}{"{}password2"{}}));}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assertEquals(\textcolor{stringliteral}{"{}Logowanie\ udane"{}},\ input2.readLine());}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ output1.println(\textcolor{stringliteral}{"{}Hello,\ user2!"{}});}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ String\ receivedMessage\ =\ input2.readLine();}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assertEquals(\textcolor{stringliteral}{"{}user1:\ Hello,\ user2!"{}},\ receivedMessage,\ \textcolor{stringliteral}{"{}Oczekiwano\ poprawnej\ wiadomości\ od\ klienta\ 1."{}});}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ System.out.println(\textcolor{stringliteral}{"{}Test\ przesyłania\ wiadomości\ między\ klientami\ zakończony\ sukcesem:\ "{}}\ +\ receivedMessage);}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00143}00143\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (Exception\ e)\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ System.out.println(\textcolor{stringliteral}{"{}Test\ przesyłania\ wiadomości\ między\ klientami\ nie\ powiódł\ się:\ "{}}\ +\ e.getMessage());}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ e;}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00146}00146\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00147}00147\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00153}00153\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00154}00154\ \ \ \ \ @DisplayName(\textcolor{stringliteral}{"{}Test\ wyrzucenia\ klienta\ przez\ administratora"{}})}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00155}\mbox{\hyperlink{class_chat_server_and_client_test_ab41af50ad2209ccaa209d0f1df94c5c4}{00155}}\ \ \ \ \ void\ \mbox{\hyperlink{class_chat_server_and_client_test_ab41af50ad2209ccaa209d0f1df94c5c4}{testKickUser}}()\ throws\ Exception\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00156}00156\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ (PrintWriter\ writer\ =\ \textcolor{keyword}{new}\ PrintWriter(\textcolor{keyword}{new}\ FileWriter(\textcolor{stringliteral}{"{}users.txt"{}})))\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ writer.println(\textcolor{stringliteral}{"{}user1:"{}}\ +\ \mbox{\hyperlink{class_chat_server_and_client_test_aca47c3be157a66990a343aac32358e2f}{hashPassword}}(\textcolor{stringliteral}{"{}password1"{}}));}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ (Socket\ client1\ =\ \textcolor{keyword}{new}\ Socket(\textcolor{stringliteral}{"{}localhost"{}},\ 50000);}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BufferedReader\ input1\ =\ \textcolor{keyword}{new}\ BufferedReader(\textcolor{keyword}{new}\ InputStreamReader(client1.getInputStream(),\ StandardCharsets.UTF\_8));}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PrintWriter\ output1\ =\ \textcolor{keyword}{new}\ PrintWriter(\textcolor{keyword}{new}\ OutputStreamWriter(client1.getOutputStream(),\ StandardCharsets.UTF\_8),\ \textcolor{keyword}{true}))\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ output1.println(\textcolor{stringliteral}{"{}user1:"{}}\ +\ \mbox{\hyperlink{class_chat_server_and_client_test_aca47c3be157a66990a343aac32358e2f}{hashPassword}}(\textcolor{stringliteral}{"{}password1"{}}));}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assertEquals(\textcolor{stringliteral}{"{}Logowanie\ udane"{}},\ input1.readLine());}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_chat_server_and_client_test_af920dd011cd043922a433c46e73d0e29}{server}}.\mbox{\hyperlink{class_chat_server_a317bbd2d6fb94d6283f76298cd91fd18}{kickUser}}(\textcolor{stringliteral}{"{}user1"{}});}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ String\ disconnectMessage\ =\ input1.readLine();}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assertEquals(\textcolor{stringliteral}{"{}Zostałeś\ rozłączony\ przez\ administratora."{}},\ disconnectMessage,\ \textcolor{stringliteral}{"{}Klient\ powinien\ otrzymać\ wiadomość\ o\ rozłączeniu."{}});}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ System.out.println(\textcolor{stringliteral}{"{}Test\ wyrzucenia\ klienta\ przez\ administratora\ zakończony\ sukcesem:\ "{}}\ +\ disconnectMessage);}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00174}00174\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (Exception\ e)\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ System.out.println(\textcolor{stringliteral}{"{}Test\ wyrzucenia\ klienta\ przez\ administratora\ nie\ powiódł\ się:\ "{}}\ +\ e.getMessage());}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ e;}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00177}00177\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00178}00178\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00186}\mbox{\hyperlink{class_chat_server_and_client_test_aca47c3be157a66990a343aac32358e2f}{00186}}\ \ \ \ \ \textcolor{keyword}{private}\ String\ \mbox{\hyperlink{class_chat_server_and_client_test_aca47c3be157a66990a343aac32358e2f}{hashPassword}}(String\ password)\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00187}00187\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ MessageDigest\ digest\ =\ MessageDigest.getInstance(\textcolor{stringliteral}{"{}SHA-\/256"{}});}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}[]\ encodedHash\ =\ digest.digest(password.getBytes(StandardCharsets.UTF\_8));}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ StringBuilder\ hexString\ =\ \textcolor{keyword}{new}\ StringBuilder();}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{byte}\ b\ :\ encodedHash)\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hexString.append(String.format(\textcolor{stringliteral}{"{}\%02x"{}},\ b));}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ hexString.toString();}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00195}00195\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (NoSuchAlgorithmException\ e)\ \{}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{keyword}{new}\ RuntimeException(\textcolor{stringliteral}{"{}SHA-\/256\ not\ supported"{}});}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00197}00197\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00198}00198\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chat_server_and_client_test_8java_source_l00199}00199\ \}}
+
+\end{DoxyCode}

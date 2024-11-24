@@ -1,0 +1,147 @@
+\doxysection{Chat\+Server\+And\+Client\+Test Class Reference}
+\hypertarget{class_chat_server_and_client_test}{}\label{class_chat_server_and_client_test}\index{ChatServerAndClientTest@{ChatServerAndClientTest}}
+\doxysubsubsection*{Package Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_chat_server_and_client_test_a66ba60c7c3be7f6a0dffe24c7c7788f3}{set\+Up}} ()
+\item 
+void \mbox{\hyperlink{class_chat_server_and_client_test_abe4084e83af979c450a3f92042964b01}{tear\+Down}} ()  throws IOException 
+\item 
+void \mbox{\hyperlink{class_chat_server_and_client_test_afdf5b5d840dc186c92731f97eb6d9e19}{test\+Client\+Login\+Success}} ()  throws Exception 
+\item 
+void \mbox{\hyperlink{class_chat_server_and_client_test_a294368f9869e4b0424d848002ec8f7d2}{test\+Client\+Login\+Failure}} ()  throws Exception 
+\item 
+void \mbox{\hyperlink{class_chat_server_and_client_test_a9b9fb4a76afc819168830b85de26813f}{test\+Message\+Broadcast}} ()  throws Exception 
+\item 
+void \mbox{\hyperlink{class_chat_server_and_client_test_ab41af50ad2209ccaa209d0f1df94c5c4}{test\+Kick\+User}} ()  throws Exception 
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+String \mbox{\hyperlink{class_chat_server_and_client_test_aca47c3be157a66990a343aac32358e2f}{hash\+Password}} (String password)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_chat_server}{Chat\+Server}} \mbox{\hyperlink{class_chat_server_and_client_test_af920dd011cd043922a433c46e73d0e29}{server}}
+\item 
+Thread \mbox{\hyperlink{class_chat_server_and_client_test_a1730241e7f5806590881cb540b3eedf9}{server\+Thread}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Klasa testowa dla serwera i klienta czatu. Obejmuje testy poprawności logowania, przesyłania wiadomości oraz zarządzania użytkownikami. 
+
+Definition at line \mbox{\hyperlink{_chat_server_and_client_test_8java_source_l00015}{15}} of file \mbox{\hyperlink{_chat_server_and_client_test_8java_source}{Chat\+Server\+And\+Client\+Test.\+java}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_chat_server_and_client_test_aca47c3be157a66990a343aac32358e2f}\index{ChatServerAndClientTest@{ChatServerAndClientTest}!hashPassword@{hashPassword}}
+\index{hashPassword@{hashPassword}!ChatServerAndClientTest@{ChatServerAndClientTest}}
+\doxysubsubsection{\texorpdfstring{hashPassword()}{hashPassword()}}
+{\footnotesize\ttfamily \label{class_chat_server_and_client_test_aca47c3be157a66990a343aac32358e2f} 
+String Chat\+Server\+And\+Client\+Test.\+hash\+Password (\begin{DoxyParamCaption}\item[{String}]{password}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Hashuje hasło przy użyciu algorytmu SHA-\/256.
+
+
+\begin{DoxyParams}{Parameters}
+{\em password} & Hasło do zhashowania. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Zhashowane hasło w formacie szesnastkowym. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chat_server_and_client_test_8java_source_l00186}{186}} of file \mbox{\hyperlink{_chat_server_and_client_test_8java_source}{Chat\+Server\+And\+Client\+Test.\+java}}.
+
+\Hypertarget{class_chat_server_and_client_test_a66ba60c7c3be7f6a0dffe24c7c7788f3}\index{ChatServerAndClientTest@{ChatServerAndClientTest}!setUp@{setUp}}
+\index{setUp@{setUp}!ChatServerAndClientTest@{ChatServerAndClientTest}}
+\doxysubsubsection{\texorpdfstring{setUp()}{setUp()}}
+{\footnotesize\ttfamily \label{class_chat_server_and_client_test_a66ba60c7c3be7f6a0dffe24c7c7788f3} 
+void Chat\+Server\+And\+Client\+Test.\+set\+Up (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [package]}}
+
+Przygotowanie środowiska testowego przed każdym testem. Inicjalizuje serwer i uruchamia go w osobnym wątku. 
+
+Definition at line \mbox{\hyperlink{_chat_server_and_client_test_8java_source_l00032}{32}} of file \mbox{\hyperlink{_chat_server_and_client_test_8java_source}{Chat\+Server\+And\+Client\+Test.\+java}}.
+
+\Hypertarget{class_chat_server_and_client_test_abe4084e83af979c450a3f92042964b01}\index{ChatServerAndClientTest@{ChatServerAndClientTest}!tearDown@{tearDown}}
+\index{tearDown@{tearDown}!ChatServerAndClientTest@{ChatServerAndClientTest}}
+\doxysubsubsection{\texorpdfstring{tearDown()}{tearDown()}}
+{\footnotesize\ttfamily \label{class_chat_server_and_client_test_abe4084e83af979c450a3f92042964b01} 
+void Chat\+Server\+And\+Client\+Test.\+tear\+Down (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) throws IOException\hspace{0.3cm}{\ttfamily [package]}}
+
+Czyszczenie środowiska testowego po każdym teście. Zatrzymuje serwer i zamyka wątek serwera. 
+
+Definition at line \mbox{\hyperlink{_chat_server_and_client_test_8java_source_l00048}{48}} of file \mbox{\hyperlink{_chat_server_and_client_test_8java_source}{Chat\+Server\+And\+Client\+Test.\+java}}.
+
+\Hypertarget{class_chat_server_and_client_test_a294368f9869e4b0424d848002ec8f7d2}\index{ChatServerAndClientTest@{ChatServerAndClientTest}!testClientLoginFailure@{testClientLoginFailure}}
+\index{testClientLoginFailure@{testClientLoginFailure}!ChatServerAndClientTest@{ChatServerAndClientTest}}
+\doxysubsubsection{\texorpdfstring{testClientLoginFailure()}{testClientLoginFailure()}}
+{\footnotesize\ttfamily \label{class_chat_server_and_client_test_a294368f9869e4b0424d848002ec8f7d2} 
+void Chat\+Server\+And\+Client\+Test.\+test\+Client\+Login\+Failure (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) throws Exception\hspace{0.3cm}{\ttfamily [package]}}
+
+Test logowania klienta z niepoprawnymi danymi. Sprawdza, czy serwer odrzuca niepoprawne dane logowania. 
+
+Definition at line \mbox{\hyperlink{_chat_server_and_client_test_8java_source_l00092}{92}} of file \mbox{\hyperlink{_chat_server_and_client_test_8java_source}{Chat\+Server\+And\+Client\+Test.\+java}}.
+
+\Hypertarget{class_chat_server_and_client_test_afdf5b5d840dc186c92731f97eb6d9e19}\index{ChatServerAndClientTest@{ChatServerAndClientTest}!testClientLoginSuccess@{testClientLoginSuccess}}
+\index{testClientLoginSuccess@{testClientLoginSuccess}!ChatServerAndClientTest@{ChatServerAndClientTest}}
+\doxysubsubsection{\texorpdfstring{testClientLoginSuccess()}{testClientLoginSuccess()}}
+{\footnotesize\ttfamily \label{class_chat_server_and_client_test_afdf5b5d840dc186c92731f97eb6d9e19} 
+void Chat\+Server\+And\+Client\+Test.\+test\+Client\+Login\+Success (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) throws Exception\hspace{0.3cm}{\ttfamily [package]}}
+
+Test logowania klienta z poprawnymi danymi. Sprawdza, czy serwer akceptuje poprawne dane logowania. 
+
+Definition at line \mbox{\hyperlink{_chat_server_and_client_test_8java_source_l00063}{63}} of file \mbox{\hyperlink{_chat_server_and_client_test_8java_source}{Chat\+Server\+And\+Client\+Test.\+java}}.
+
+\Hypertarget{class_chat_server_and_client_test_ab41af50ad2209ccaa209d0f1df94c5c4}\index{ChatServerAndClientTest@{ChatServerAndClientTest}!testKickUser@{testKickUser}}
+\index{testKickUser@{testKickUser}!ChatServerAndClientTest@{ChatServerAndClientTest}}
+\doxysubsubsection{\texorpdfstring{testKickUser()}{testKickUser()}}
+{\footnotesize\ttfamily \label{class_chat_server_and_client_test_ab41af50ad2209ccaa209d0f1df94c5c4} 
+void Chat\+Server\+And\+Client\+Test.\+test\+Kick\+User (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) throws Exception\hspace{0.3cm}{\ttfamily [package]}}
+
+Test wyrzucenia klienta przez administratora. Sprawdza, czy klient otrzymuje odpowiednią wiadomość i jest rozłączony. 
+
+Definition at line \mbox{\hyperlink{_chat_server_and_client_test_8java_source_l00155}{155}} of file \mbox{\hyperlink{_chat_server_and_client_test_8java_source}{Chat\+Server\+And\+Client\+Test.\+java}}.
+
+\Hypertarget{class_chat_server_and_client_test_a9b9fb4a76afc819168830b85de26813f}\index{ChatServerAndClientTest@{ChatServerAndClientTest}!testMessageBroadcast@{testMessageBroadcast}}
+\index{testMessageBroadcast@{testMessageBroadcast}!ChatServerAndClientTest@{ChatServerAndClientTest}}
+\doxysubsubsection{\texorpdfstring{testMessageBroadcast()}{testMessageBroadcast()}}
+{\footnotesize\ttfamily \label{class_chat_server_and_client_test_a9b9fb4a76afc819168830b85de26813f} 
+void Chat\+Server\+And\+Client\+Test.\+test\+Message\+Broadcast (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) throws Exception\hspace{0.3cm}{\ttfamily [package]}}
+
+Test przesyłania wiadomości między dwoma klientami. Sprawdza, czy wiadomości są poprawnie przesyłane między klientami za pośrednictwem serwera. 
+
+Definition at line \mbox{\hyperlink{_chat_server_and_client_test_8java_source_l00116}{116}} of file \mbox{\hyperlink{_chat_server_and_client_test_8java_source}{Chat\+Server\+And\+Client\+Test.\+java}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_chat_server_and_client_test_af920dd011cd043922a433c46e73d0e29}\index{ChatServerAndClientTest@{ChatServerAndClientTest}!server@{server}}
+\index{server@{server}!ChatServerAndClientTest@{ChatServerAndClientTest}}
+\doxysubsubsection{\texorpdfstring{server}{server}}
+{\footnotesize\ttfamily \label{class_chat_server_and_client_test_af920dd011cd043922a433c46e73d0e29} 
+\mbox{\hyperlink{class_chat_server}{Chat\+Server}} Chat\+Server\+And\+Client\+Test.\+server\hspace{0.3cm}{\ttfamily [private]}}
+
+Instancja serwera czatu używana do testów. 
+
+Definition at line \mbox{\hyperlink{_chat_server_and_client_test_8java_source_l00020}{20}} of file \mbox{\hyperlink{_chat_server_and_client_test_8java_source}{Chat\+Server\+And\+Client\+Test.\+java}}.
+
+\Hypertarget{class_chat_server_and_client_test_a1730241e7f5806590881cb540b3eedf9}\index{ChatServerAndClientTest@{ChatServerAndClientTest}!serverThread@{serverThread}}
+\index{serverThread@{serverThread}!ChatServerAndClientTest@{ChatServerAndClientTest}}
+\doxysubsubsection{\texorpdfstring{serverThread}{serverThread}}
+{\footnotesize\ttfamily \label{class_chat_server_and_client_test_a1730241e7f5806590881cb540b3eedf9} 
+Thread Chat\+Server\+And\+Client\+Test.\+server\+Thread\hspace{0.3cm}{\ttfamily [private]}}
+
+Wątek uruchamiający serwer. 
+
+Definition at line \mbox{\hyperlink{_chat_server_and_client_test_8java_source_l00025}{25}} of file \mbox{\hyperlink{_chat_server_and_client_test_8java_source}{Chat\+Server\+And\+Client\+Test.\+java}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src\+\_\+test/\mbox{\hyperlink{_chat_server_and_client_test_8java}{Chat\+Server\+And\+Client\+Test.\+java}}\end{DoxyCompactItemize}

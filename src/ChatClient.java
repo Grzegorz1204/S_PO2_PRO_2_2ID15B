@@ -8,28 +8,76 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Klasa reprezentująca klienta czatu z GUI.
+ * Pozwala użytkownikowi logować się na serwer, wysyłać i odbierać wiadomości w czasie rzeczywistym.
+ */
 public class ChatClient extends JFrame {
+
+    /**
+     * Pole tekstowe do wyświetlania wiadomości czatu.
+     */
     protected JTextArea chatArea;
+
+    /**
+     * Pole tekstowe do wprowadzania wiadomości do wysłania.
+     */
     protected JTextField messageField;
+
+    /**
+     * Przycisk do wysyłania wiadomości.
+     */
     protected JButton sendButton;
+
+    /**
+     * Pole tekstowe do wprowadzania nazwy użytkownika.
+     */
     protected JTextField usernameField;
+
+    /**
+     * Pole tekstowe do wprowadzania hasła.
+     */
     protected JPasswordField passwordField;
+
+    /**
+     * Przycisk do logowania użytkownika.
+     */
     protected JButton loginButton;
 
+    /**
+     * Obiekt czytnika do odbierania wiadomości z serwera.
+     */
     protected BufferedReader reader;
+
+    /**
+     * Obiekt zapisujący do wysyłania wiadomości do serwera.
+     */
     protected PrintWriter writer;
+
+    /**
+     * Gniazdo sieciowe używane do komunikacji z serwerem.
+     */
     protected Socket socket;
 
+    /**
+     * Konstruktor klasy ChatClient.
+     * Tworzy interfejs użytkownika i inicjalizuje połączenie z serwerem.
+     *
+     * @param serverAddress Adres serwera czatu.
+     * @param port          Port serwera czatu.
+     */
     public ChatClient(String serverAddress, int port) {
         setTitle("CHAT");
         setSize(400, 150);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        // Tworzenie panelu logowania
         JPanel loginPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
 
+        // Etykieta i pole tekstowe dla nazwy użytkownika
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
@@ -40,6 +88,7 @@ public class ChatClient extends JFrame {
         usernameField = new JTextField(20);
         loginPanel.add(usernameField, gbc);
 
+        // Etykieta i pole tekstowe dla hasła
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.NONE;
@@ -50,6 +99,7 @@ public class ChatClient extends JFrame {
         passwordField = new JPasswordField(20);
         loginPanel.add(passwordField, gbc);
 
+        // Przycisk logowania
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 2;
@@ -61,19 +111,23 @@ public class ChatClient extends JFrame {
         setLayout(new BorderLayout());
         add(loginPanel, BorderLayout.CENTER);
 
+        // Obsługa zdarzenia przycisku logowania
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
                 try {
+                    // Inicjalizacja połączenia z serwerem
                     socket = new Socket(serverAddress, port);
                     reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
                     writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
 
+                    // Hashowanie hasła i przesyłanie do serwera
                     String hashedPassword = hashPassword(password);
                     writer.println(username + ":" + hashedPassword);
 
+                    // Obsługa odpowiedzi serwera
                     String response = reader.readLine();
                     if ("Logowanie udane".equals(response)) {
                         JOptionPane.showMessageDialog(null, "Logowanie udane!");
@@ -86,7 +140,7 @@ public class ChatClient extends JFrame {
 
                         new Thread(new IncomingReader()).start();
                     } else {
-                        JOptionPane.showMessageDialog(null, "Login failed. Please try again.");
+                        JOptionPane.showMessageDialog(null, "Logowanie nie powiod\u0142o si\u0119 spr\u00f3buj ponownie.");
                     }
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null, "B\u0142\u0105d po\u0142\u0105czenia z serwerem.");
@@ -95,6 +149,12 @@ public class ChatClient extends JFrame {
         });
     }
 
+    /**
+     * Hashuje hasło użytkownika przy użyciu algorytmu SHA-256.
+     *
+     * @param password Hasło do zahashowania.
+     * @return Zhashowane hasło w formacie szesnastkowym.
+     */
     protected String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -109,6 +169,9 @@ public class ChatClient extends JFrame {
         }
     }
 
+    /**
+     * Inicjalizuje komponenty interfejsu użytkownika do obsługi czatu.
+     */
     protected void initializeChatComponents() {
         chatArea = new JTextArea();
         chatArea.setEditable(false);
@@ -127,6 +190,7 @@ public class ChatClient extends JFrame {
         add(chatScrollPane, BorderLayout.CENTER);
         add(messagePanel, BorderLayout.SOUTH);
 
+        // Obsługa zdarzenia przycisku wysyłania wiadomości
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -142,6 +206,9 @@ public class ChatClient extends JFrame {
         });
     }
 
+    /**
+     * Wysyła wiadomość wprowadzoną przez użytkownika do serwera.
+     */
     protected void sendMessage() {
         String message = messageField.getText();
         if (!message.isEmpty()) {
@@ -151,6 +218,9 @@ public class ChatClient extends JFrame {
         }
     }
 
+    /**
+     * Klasa do obsługi wątków odbierających wiadomości z serwera.
+     */
     protected class IncomingReader implements Runnable {
         @Override
         public void run() {
@@ -160,11 +230,14 @@ public class ChatClient extends JFrame {
                     chatArea.append(message + "\n");
                 }
             } catch (IOException ex) {
-                chatArea.append("Connection to server lost: " + ex.getMessage() + "\n");
-            }            
+                chatArea.append("Po\u0142\u0105czenie z serwerem zerwane: " + ex.getMessage() + "\n");
+            }
         }
     }
 
+    /**
+     * Punkt wejścia aplikacji, wywoływany przy uruchamianiu programu.
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame();

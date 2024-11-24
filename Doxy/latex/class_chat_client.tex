@@ -1,0 +1,233 @@
+\doxysection{Chat\+Client Class Reference}
+\hypertarget{class_chat_client}{}\label{class_chat_client}\index{ChatClient@{ChatClient}}
+Inheritance diagram for Chat\+Client\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_chat_client}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_chat_client_1_1_incoming_reader}{Incoming\+Reader}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_chat_client_a2ea077816ffce98b5f9beea82bc28bf9}{Chat\+Client}} (String server\+Address, int port)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_chat_client_a313b3c2bc37ac5924e7596d7beeaac9b}{main}} (String\mbox{[}$\,$\mbox{]} args)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+String \mbox{\hyperlink{class_chat_client_a00352dcb9607493723c8130454c1445b}{hash\+Password}} (String password)
+\item 
+void \mbox{\hyperlink{class_chat_client_a8bc677bdf9b9d7ba9c4b4657c25ac6d6}{initialize\+Chat\+Components}} ()
+\item 
+void \mbox{\hyperlink{class_chat_client_af8ac544e69178297ffdb9081f73f27fb}{send\+Message}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+JText\+Area \mbox{\hyperlink{class_chat_client_aa65c4b739f496d285a529984e4ba1940}{chat\+Area}}
+\item 
+JText\+Field \mbox{\hyperlink{class_chat_client_a2e00e23fec093baeb5b0103d87fd83b7}{message\+Field}}
+\item 
+JButton \mbox{\hyperlink{class_chat_client_a117291ee0284d312bc15221e905af1d7}{send\+Button}}
+\item 
+JText\+Field \mbox{\hyperlink{class_chat_client_a08d671c8dcc24d8bd1b384a7431c2427}{username\+Field}}
+\item 
+JPassword\+Field \mbox{\hyperlink{class_chat_client_a8a0ec077e61140c0bb22fa75340dbb13}{password\+Field}}
+\item 
+JButton \mbox{\hyperlink{class_chat_client_af6e00151799c233efba8f7af3b0a2538}{login\+Button}}
+\item 
+Buffered\+Reader \mbox{\hyperlink{class_chat_client_a0c417b5650e0cf9da4fb471c7efa6a4b}{reader}}
+\item 
+Print\+Writer \mbox{\hyperlink{class_chat_client_aef17d95c79cc30f14ed03b23a258504d}{writer}}
+\item 
+Socket \mbox{\hyperlink{class_chat_client_a13e9be8751a4a3f2d9d10ade086cf783}{socket}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Klasa reprezentująca klienta czatu z GUI. Pozwala użytkownikowi logować się na serwer, wysyłać i odbierać wiadomości w czasie rzeczywistym. 
+
+Definition at line \mbox{\hyperlink{_chat_client_8java_source_l00015}{15}} of file \mbox{\hyperlink{_chat_client_8java_source}{Chat\+Client.\+java}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_chat_client_a2ea077816ffce98b5f9beea82bc28bf9}\index{ChatClient@{ChatClient}!ChatClient@{ChatClient}}
+\index{ChatClient@{ChatClient}!ChatClient@{ChatClient}}
+\doxysubsubsection{\texorpdfstring{ChatClient()}{ChatClient()}}
+{\footnotesize\ttfamily \label{class_chat_client_a2ea077816ffce98b5f9beea82bc28bf9} 
+Chat\+Client.\+Chat\+Client (\begin{DoxyParamCaption}\item[{String}]{server\+Address}{, }\item[{int}]{port}{}\end{DoxyParamCaption})}
+
+Konstruktor klasy \doxylink{class_chat_client}{Chat\+Client}. Tworzy interfejs użytkownika i inicjalizuje połączenie z serwerem.
+
+
+\begin{DoxyParams}{Parameters}
+{\em server\+Address} & Adres serwera czatu. \\
+\hline
+{\em port} & Port serwera czatu. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_chat_client_8java_source_l00069}{69}} of file \mbox{\hyperlink{_chat_client_8java_source}{Chat\+Client.\+java}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_chat_client_a00352dcb9607493723c8130454c1445b}\index{ChatClient@{ChatClient}!hashPassword@{hashPassword}}
+\index{hashPassword@{hashPassword}!ChatClient@{ChatClient}}
+\doxysubsubsection{\texorpdfstring{hashPassword()}{hashPassword()}}
+{\footnotesize\ttfamily \label{class_chat_client_a00352dcb9607493723c8130454c1445b} 
+String Chat\+Client.\+hash\+Password (\begin{DoxyParamCaption}\item[{String}]{password}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Hashuje hasło użytkownika przy użyciu algorytmu SHA-\/256.
+
+
+\begin{DoxyParams}{Parameters}
+{\em password} & Hasło do zahashowania. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Zhashowane hasło w formacie szesnastkowym. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chat_client_8java_source_l00158}{158}} of file \mbox{\hyperlink{_chat_client_8java_source}{Chat\+Client.\+java}}.
+
+\Hypertarget{class_chat_client_a8bc677bdf9b9d7ba9c4b4657c25ac6d6}\index{ChatClient@{ChatClient}!initializeChatComponents@{initializeChatComponents}}
+\index{initializeChatComponents@{initializeChatComponents}!ChatClient@{ChatClient}}
+\doxysubsubsection{\texorpdfstring{initializeChatComponents()}{initializeChatComponents()}}
+{\footnotesize\ttfamily \label{class_chat_client_a8bc677bdf9b9d7ba9c4b4657c25ac6d6} 
+void Chat\+Client.\+initialize\+Chat\+Components (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Inicjalizuje komponenty interfejsu użytkownika do obsługi czatu. 
+
+Definition at line \mbox{\hyperlink{_chat_client_8java_source_l00175}{175}} of file \mbox{\hyperlink{_chat_client_8java_source}{Chat\+Client.\+java}}.
+
+\Hypertarget{class_chat_client_a313b3c2bc37ac5924e7596d7beeaac9b}\index{ChatClient@{ChatClient}!main@{main}}
+\index{main@{main}!ChatClient@{ChatClient}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{class_chat_client_a313b3c2bc37ac5924e7596d7beeaac9b} 
+static void Chat\+Client.\+main (\begin{DoxyParamCaption}\item[{String\mbox{[}$\,$\mbox{]}}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Punkt wejścia aplikacji, wywoływany przy uruchamianiu programu. 
+
+Definition at line \mbox{\hyperlink{_chat_client_8java_source_l00241}{241}} of file \mbox{\hyperlink{_chat_client_8java_source}{Chat\+Client.\+java}}.
+
+\Hypertarget{class_chat_client_af8ac544e69178297ffdb9081f73f27fb}\index{ChatClient@{ChatClient}!sendMessage@{sendMessage}}
+\index{sendMessage@{sendMessage}!ChatClient@{ChatClient}}
+\doxysubsubsection{\texorpdfstring{sendMessage()}{sendMessage()}}
+{\footnotesize\ttfamily \label{class_chat_client_af8ac544e69178297ffdb9081f73f27fb} 
+void Chat\+Client.\+send\+Message (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Wysyła wiadomość wprowadzoną przez użytkownika do serwera. 
+
+Definition at line \mbox{\hyperlink{_chat_client_8java_source_l00212}{212}} of file \mbox{\hyperlink{_chat_client_8java_source}{Chat\+Client.\+java}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_chat_client_aa65c4b739f496d285a529984e4ba1940}\index{ChatClient@{ChatClient}!chatArea@{chatArea}}
+\index{chatArea@{chatArea}!ChatClient@{ChatClient}}
+\doxysubsubsection{\texorpdfstring{chatArea}{chatArea}}
+{\footnotesize\ttfamily \label{class_chat_client_aa65c4b739f496d285a529984e4ba1940} 
+JText\+Area Chat\+Client.\+chat\+Area\hspace{0.3cm}{\ttfamily [protected]}}
+
+Pole tekstowe do wyświetlania wiadomości czatu. 
+
+Definition at line \mbox{\hyperlink{_chat_client_8java_source_l00020}{20}} of file \mbox{\hyperlink{_chat_client_8java_source}{Chat\+Client.\+java}}.
+
+\Hypertarget{class_chat_client_af6e00151799c233efba8f7af3b0a2538}\index{ChatClient@{ChatClient}!loginButton@{loginButton}}
+\index{loginButton@{loginButton}!ChatClient@{ChatClient}}
+\doxysubsubsection{\texorpdfstring{loginButton}{loginButton}}
+{\footnotesize\ttfamily \label{class_chat_client_af6e00151799c233efba8f7af3b0a2538} 
+JButton Chat\+Client.\+login\+Button\hspace{0.3cm}{\ttfamily [protected]}}
+
+Przycisk do logowania użytkownika. 
+
+Definition at line \mbox{\hyperlink{_chat_client_8java_source_l00045}{45}} of file \mbox{\hyperlink{_chat_client_8java_source}{Chat\+Client.\+java}}.
+
+\Hypertarget{class_chat_client_a2e00e23fec093baeb5b0103d87fd83b7}\index{ChatClient@{ChatClient}!messageField@{messageField}}
+\index{messageField@{messageField}!ChatClient@{ChatClient}}
+\doxysubsubsection{\texorpdfstring{messageField}{messageField}}
+{\footnotesize\ttfamily \label{class_chat_client_a2e00e23fec093baeb5b0103d87fd83b7} 
+JText\+Field Chat\+Client.\+message\+Field\hspace{0.3cm}{\ttfamily [protected]}}
+
+Pole tekstowe do wprowadzania wiadomości do wysłania. 
+
+Definition at line \mbox{\hyperlink{_chat_client_8java_source_l00025}{25}} of file \mbox{\hyperlink{_chat_client_8java_source}{Chat\+Client.\+java}}.
+
+\Hypertarget{class_chat_client_a8a0ec077e61140c0bb22fa75340dbb13}\index{ChatClient@{ChatClient}!passwordField@{passwordField}}
+\index{passwordField@{passwordField}!ChatClient@{ChatClient}}
+\doxysubsubsection{\texorpdfstring{passwordField}{passwordField}}
+{\footnotesize\ttfamily \label{class_chat_client_a8a0ec077e61140c0bb22fa75340dbb13} 
+JPassword\+Field Chat\+Client.\+password\+Field\hspace{0.3cm}{\ttfamily [protected]}}
+
+Pole tekstowe do wprowadzania hasła. 
+
+Definition at line \mbox{\hyperlink{_chat_client_8java_source_l00040}{40}} of file \mbox{\hyperlink{_chat_client_8java_source}{Chat\+Client.\+java}}.
+
+\Hypertarget{class_chat_client_a0c417b5650e0cf9da4fb471c7efa6a4b}\index{ChatClient@{ChatClient}!reader@{reader}}
+\index{reader@{reader}!ChatClient@{ChatClient}}
+\doxysubsubsection{\texorpdfstring{reader}{reader}}
+{\footnotesize\ttfamily \label{class_chat_client_a0c417b5650e0cf9da4fb471c7efa6a4b} 
+Buffered\+Reader Chat\+Client.\+reader\hspace{0.3cm}{\ttfamily [protected]}}
+
+Obiekt czytnika do odbierania wiadomości z serwera. 
+
+Definition at line \mbox{\hyperlink{_chat_client_8java_source_l00050}{50}} of file \mbox{\hyperlink{_chat_client_8java_source}{Chat\+Client.\+java}}.
+
+\Hypertarget{class_chat_client_a117291ee0284d312bc15221e905af1d7}\index{ChatClient@{ChatClient}!sendButton@{sendButton}}
+\index{sendButton@{sendButton}!ChatClient@{ChatClient}}
+\doxysubsubsection{\texorpdfstring{sendButton}{sendButton}}
+{\footnotesize\ttfamily \label{class_chat_client_a117291ee0284d312bc15221e905af1d7} 
+JButton Chat\+Client.\+send\+Button\hspace{0.3cm}{\ttfamily [protected]}}
+
+Przycisk do wysyłania wiadomości. 
+
+Definition at line \mbox{\hyperlink{_chat_client_8java_source_l00030}{30}} of file \mbox{\hyperlink{_chat_client_8java_source}{Chat\+Client.\+java}}.
+
+\Hypertarget{class_chat_client_a13e9be8751a4a3f2d9d10ade086cf783}\index{ChatClient@{ChatClient}!socket@{socket}}
+\index{socket@{socket}!ChatClient@{ChatClient}}
+\doxysubsubsection{\texorpdfstring{socket}{socket}}
+{\footnotesize\ttfamily \label{class_chat_client_a13e9be8751a4a3f2d9d10ade086cf783} 
+Socket Chat\+Client.\+socket\hspace{0.3cm}{\ttfamily [protected]}}
+
+Gniazdo sieciowe używane do komunikacji z serwerem. 
+
+Definition at line \mbox{\hyperlink{_chat_client_8java_source_l00060}{60}} of file \mbox{\hyperlink{_chat_client_8java_source}{Chat\+Client.\+java}}.
+
+\Hypertarget{class_chat_client_a08d671c8dcc24d8bd1b384a7431c2427}\index{ChatClient@{ChatClient}!usernameField@{usernameField}}
+\index{usernameField@{usernameField}!ChatClient@{ChatClient}}
+\doxysubsubsection{\texorpdfstring{usernameField}{usernameField}}
+{\footnotesize\ttfamily \label{class_chat_client_a08d671c8dcc24d8bd1b384a7431c2427} 
+JText\+Field Chat\+Client.\+username\+Field\hspace{0.3cm}{\ttfamily [protected]}}
+
+Pole tekstowe do wprowadzania nazwy użytkownika. 
+
+Definition at line \mbox{\hyperlink{_chat_client_8java_source_l00035}{35}} of file \mbox{\hyperlink{_chat_client_8java_source}{Chat\+Client.\+java}}.
+
+\Hypertarget{class_chat_client_aef17d95c79cc30f14ed03b23a258504d}\index{ChatClient@{ChatClient}!writer@{writer}}
+\index{writer@{writer}!ChatClient@{ChatClient}}
+\doxysubsubsection{\texorpdfstring{writer}{writer}}
+{\footnotesize\ttfamily \label{class_chat_client_aef17d95c79cc30f14ed03b23a258504d} 
+Print\+Writer Chat\+Client.\+writer\hspace{0.3cm}{\ttfamily [protected]}}
+
+Obiekt zapisujący do wysyłania wiadomości do serwera. 
+
+Definition at line \mbox{\hyperlink{_chat_client_8java_source_l00055}{55}} of file \mbox{\hyperlink{_chat_client_8java_source}{Chat\+Client.\+java}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{_chat_client_8java}{Chat\+Client.\+java}}\end{DoxyCompactItemize}
